@@ -1,0 +1,58 @@
+{
+    "frames": {
+        "snowNW": {
+            "frame": {"x":0, "y":0, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowN": {
+            "frame": {"x":16, "y":0, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowNE": {
+            "frame": {"x":32, "y":0, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowW": {
+            "frame": {"x":0, "y":16, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowC": {
+            "frame": {"x":16, "y":16, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowE": {
+            "frame": {"x":32, "y":16, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowSW": {
+            "frame": {"x":0, "y":32, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowS": {
+            "frame": {"x":16, "y":32, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        },
+        "snowSE": {
+            "frame": {"x":32, "y":32, "w":16, "h":16},
+            "sourceSize": { "w": 16, "h": 16 },
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 }
+        }
+    },
+    "meta": {
+        "image": "lilDragonTileset.png",
+        "format": "RGBA8888",
+        "scale": "1",
+        "size": {
+            "w": 192,
+            "h": 1032
+        }
+    }
+}
