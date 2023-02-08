@@ -1,5 +1,6 @@
-import { Application, Assets, Spritesheet } from "pixi.js"
+import { Application, Assets, Spritesheet, settings, SCALE_MODES } from "pixi.js"
 import Tilemap from "./classes/Tilemap"
+import MapHandler from "./classes/MapHandler"
 
 async function init() {
     const app = new Application({
@@ -10,20 +11,24 @@ async function init() {
     
     const appRoot = document.getElementById("appRoot");
     appRoot.append(app.view as HTMLCanvasElement);
+
+    settings.SCALE_MODE = SCALE_MODES.NEAREST;
     
     const sheet:Spritesheet = await Assets.load('assets/tileset/lilDragonTileset.json');
-    const map1 = new Tilemap({
+    const baseTilemap = new Tilemap({
+        spriteSheet: sheet,
+        parent: app.stage,
+        tileSize: 16
+    });
+    const overlayTilemap = new Tilemap({
         spriteSheet: sheet,
         parent: app.stage,
         tileSize: 16
     });
 
-    map1.setMap({
-        "0,0": "snowNW",
-        "1,1": "snowNW",
-        "2,2": "snowNW",
-        "2,4": "snowSE",
-    });
+    app.stage.scale.set(2);
+
+    const mapHandler = new MapHandler(baseTilemap, overlayTilemap);
 }
 
 init();
