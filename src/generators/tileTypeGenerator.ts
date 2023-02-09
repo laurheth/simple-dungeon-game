@@ -1,13 +1,14 @@
-import { default as TileType, TILE_NEIGHBOUR } from "../classes/TileType";
+import { default as TileType, TileFacts, TILE_NEIGHBOUR } from "../classes/TileType";
 
 // Simple tile with no variants.
-function simpleTile(name: string) {
+function simpleTile(name: string, tileFacts:TileFacts) {
     return new TileType({
         name: name,
         options: [{
             name: name,
             neighbourMask: 0
-        }]
+        }],
+        tileFacts: tileFacts
     })
 }
 
@@ -75,7 +76,8 @@ export const tileTypes = {
                 name: "purpleWallSEFront",
                 neighbourMask: TILE_NEIGHBOUR.UP | TILE_NEIGHBOUR.LEFT
             },
-        ]
+        ],
+        tileFacts: {passable: false, seeThrough: false}
     }),
-    purpleBrickFloor: simpleTile("purpleBrickFloor")
+    purpleBrickFloor: simpleTile("purpleBrickFloor", {passable:true, seeThrough:true})
 }

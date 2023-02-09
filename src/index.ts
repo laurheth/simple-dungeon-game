@@ -11,7 +11,6 @@ async function init() {
     });
 
     const gameplayContainer = new Container();
-    gameplayContainer.scale.set(2);
     app.stage.addChild(gameplayContainer);
     
     const appRoot = document.getElementById("appRoot");
@@ -23,15 +22,25 @@ async function init() {
     const baseTilemap = new Tilemap({
         spriteSheet: sheet,
         parent: gameplayContainer,
-        tileSize: 16
+        tileSize: 32
     });
+
+    const entityContainer = new Container();
+    entityContainer.sortableChildren = true;
+    gameplayContainer.addChild(entityContainer);
+
     const overlayTilemap = new Tilemap({
         spriteSheet: sheet,
         parent: gameplayContainer,
-        tileSize: 16
+        tileSize: 32
     });
 
-    const mapHandler = new MapHandler(baseTilemap, overlayTilemap);
+    const mapHandler = new MapHandler({
+        base: baseTilemap,
+        overlay: overlayTilemap,
+        tileSize: 32,
+        entityContainer: entityContainer
+    });
 
     const fpsCounter = new FPSCounter(app.stage, app);
 }

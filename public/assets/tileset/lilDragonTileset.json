@@ -1809,7 +1809,7 @@
     "meta": {
         "image": "lilDragonTileset.png",
         "format": "RGBA8888",
-        "scale": "1",
+        "scale": "0.5",
         "size": {
             "w": 192,
             "h": 1032

@@ -1,3 +1,5 @@
+import Thing from "./Thing"
+
 export const TILE_NEIGHBOUR = {
     UP_LEFT: 0x00000001,
     UP: 0x00000010,
@@ -29,16 +31,25 @@ interface TileOption {
 interface TileTypeParams {
     name: string;
     options: TileOption[];
+    tileFacts: TileFacts;
+}
+
+export interface TileFacts {
+    passable: boolean;
+    seeThrough: boolean;
+    contents?:{[key:number]:Thing}
 }
 
 // Class the define a type of tile, and figure out which tile to actually show on the screen
 class TileType {
     name: string;
     options: TileOption[];
+    tileFacts: TileFacts;
 
-    constructor({name, options}:TileTypeParams) {
+    constructor({name, options, tileFacts}:TileTypeParams) {
         this.name = name;
         this.options = options;
+        this.tileFacts = tileFacts;
     }
 
     getTile(getTileCallback:(x:number,y:number)=>string): TileOption {
