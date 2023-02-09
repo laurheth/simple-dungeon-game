@@ -19,6 +19,7 @@ async function init() {
     settings.SCALE_MODE = SCALE_MODES.NEAREST;
     
     const sheet:Spritesheet = await Assets.load('assets/tileset/lilDragonTileset.json');
+    await Assets.load('assets/dude.png');
     const baseTilemap = new Tilemap({
         spriteSheet: sheet,
         parent: gameplayContainer,

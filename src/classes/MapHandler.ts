@@ -3,6 +3,7 @@ import Tilemap from "./Tilemap"
 import { TileFacts } from "./TileType"
 import { tileTypes, tileNames } from "../generators/tileTypeGenerator"
 import Thing from "./Thing"
+import Player from "./Player"
 
 interface MapHandlerParams {
     base: Tilemap;
@@ -54,7 +55,7 @@ class MapHandler {
             }
         }
 
-        const player = new Thing({
+        const player = new Player({
             spriteSource: "assets/dude.png",
             x:0,
             y:0,
@@ -70,7 +71,6 @@ class MapHandler {
 
     canPlace(x:number, y:number, thingLayer:number): boolean {
         const key = `${x},${y}`;
-        console.log(key);
         return this.map[key] && this.map[key].passable && (!this.map[key].contents || !this.map[key].contents[thingLayer]);
     }
 
@@ -79,7 +79,6 @@ class MapHandler {
             return false;
         }
         const key = `${x},${y}`;
-        console.log(key);
         if (!this.map[key].contents) {
             this.map[key].contents = {};
         }
@@ -90,7 +89,7 @@ class MapHandler {
 
     remove(x: number, y:number, thing:Thing) {
         const key = `${x},${y}`;
-        if (this.map[key].contents[thing.thingLayer] === thing) {
+        if (this.map[key] && this.map[key].contents && this.map[key].contents[thing.thingLayer] === thing) {
             this.map[key].contents[thing.thingLayer] = null;
         }
     }

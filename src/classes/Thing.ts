@@ -1,7 +1,7 @@
 import { Sprite, SpriteSource, Container } from "pixi.js"
 import MapHandler from "./MapHandler"
 
-interface ThingParams {
+export interface ThingParams {
     spriteSource: SpriteSource;
     x: number;
     y: number;
@@ -19,11 +19,19 @@ export default class Thing {
     displayOffset: {dx: number, dy: number};
     constructor({spriteSource, x, y, mapHandler, entityContainer, displayOffset = {dx: 0, dy:0}}: ThingParams) {
         this.sprite = Sprite.from(spriteSource);
+        this.sprite.pivot.set(this.sprite.width / 2, this.sprite.height / 2);
         entityContainer.addChild(this.sprite);
         this.position = {x, y};
         this.mapHandler = mapHandler;
-        this.displayOffset = displayOffset;
+        this.displayOffset = {
+            dx: displayOffset.dx + this.sprite.pivot.x,
+            dy: displayOffset.dy + this.sprite.pivot.y
+        };
         this.placeSelfAt(x, y, true);
+    }
+
+    step(dx:number, dy:number):boolean {
+        return this.placeSelfAt(this.position.x + dx, this.position.y + dy);
     }
 
     placeSelfAt(x:number, y:number, recurse:boolean = false): boolean {
@@ -51,9 +59,11 @@ export default class Thing {
     }
 
     setPosition(x:number, y:number, tileSize:number) {
+        this.mapHandler.remove(this.position.x, this.position.y, this);
         this.position.x = x;
         this.position.y = y;
         this.sprite.x = x * tileSize + this.displayOffset.dx;
         this.sprite.y = y * tileSize + this.displayOffset.dy;
+        this.sprite.zIndex = y;
     }
 }
