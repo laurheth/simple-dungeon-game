@@ -4,8 +4,10 @@ export interface EntityParams extends ThingParams {
 }
 
 export default class Entity extends Thing {
-    thingLayer: number = 2;
     constructor(params:EntityParams) {
+        if (!params.thingLayer) {
+            params.thingLayer = 2;
+        }
         super(params);
     }
 

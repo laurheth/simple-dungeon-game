@@ -4,6 +4,8 @@ import { TileFacts } from "./TileType"
 import { tileTypes, tileNames } from "../generators/tileTypeGenerator"
 import Thing from "./Thing"
 import Player from "./Player"
+import Entity from "./Entity"
+import Pushable from "./Pushable"
 
 interface MapHandlerParams {
     base: Tilemap;
@@ -25,7 +27,7 @@ class MapHandler {
 
         for (let i=0; i<10; i++) {
             for (let j=0; j<10; j++) {
-                const key = `${i},${j+1}`;
+                const key = this.formatKey(i, j+1);
                 let id:tileNames = "purpleBrickFloor";
                 if (i === 0 || i === 9 || j === 0 || j === 9) {
                     id = "purpleBrickWall";
@@ -40,7 +42,7 @@ class MapHandler {
         let x:number, y:number;
         // Define callback function
         const checkType = (dx: number, dy:number) => {
-            const key = `${x + dx},${y + dy}`;
+            const key = this.formatKey(x + dx, y + dy);
             return mapForGeneration[key];
         }
         for (const key in mapForGeneration) {
@@ -64,13 +66,30 @@ class MapHandler {
             displayOffset: {dx:0, dy:-8}
         });
 
+        const pushableBox = new Entity({
+            spriteSource: base.spriteSheet.textures["box"],
+            x: 4,
+            y: 4,
+            mapHandler: this,
+            entityContainer,
+            interactions:[new Pushable()]
+        });
+
         // Splat onto the screen
         base.setMap(baseMap);
         overlay.setMap(overlayMap);
     }
 
+    getThingAtLocation(x:number, y:number, thingLayer:number): Thing {
+        const key = this.formatKey(x, y);
+        if (this.map[key] && this.map[key].contents) {
+            return this.map[key] && this.map[key].contents[thingLayer];
+        }
+        return null;
+    }
+
     canPlace(x:number, y:number, thingLayer:number): boolean {
-        const key = `${x},${y}`;
+        const key = this.formatKey(x, y);
         return this.map[key] && this.map[key].passable && (!this.map[key].contents || !this.map[key].contents[thingLayer]);
     }
 
@@ -78,20 +97,24 @@ class MapHandler {
         if (!this.canPlace(x,y,thing.thingLayer)) {
             return false;
         }
-        const key = `${x},${y}`;
+        const key = this.formatKey(x, y);
         if (!this.map[key].contents) {
             this.map[key].contents = {};
         }
-        this.map[key].contents[thing.thingLayer] = thing;
         thing.setPosition(x, y, this.tileSize);
+        this.map[key].contents[thing.thingLayer] = thing;
         return true;
     }
 
     remove(x: number, y:number, thing:Thing) {
-        const key = `${x},${y}`;
+        const key = this.formatKey(x, y);
         if (this.map[key] && this.map[key].contents && this.map[key].contents[thing.thingLayer] === thing) {
             this.map[key].contents[thing.thingLayer] = null;
         }
+    }
+
+    formatKey(x: number, y: number): string {
+        return `${x},${y}`;
     }
 }
 
