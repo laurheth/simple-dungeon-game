@@ -10,6 +10,7 @@ export interface ThingParams {
     entityContainer: Container;
     displayOffset?:{dx:number, dy:number};
     interactions?:Interaction[];
+    flags?:string[];
     thingLayer?:number;
 }
 
@@ -21,7 +22,8 @@ export default class Thing {
     position: {x:number, y:number};
     displayOffset: {dx: number, dy: number};
     interactions: Interaction[];
-    constructor({spriteSource, x, y, mapHandler, entityContainer, displayOffset = {dx: 0, dy:0}, interactions=[], thingLayer=0}: ThingParams) {
+    flags: Set<string>;
+    constructor({spriteSource, x, y, mapHandler, entityContainer, displayOffset = {dx: 0, dy:0}, interactions=[], thingLayer=0, flags=[]}: ThingParams) {
         // Set the sprite
         this.sprite = Sprite.from(spriteSource);
         this.sprite.pivot.set(this.sprite.width / 2, this.sprite.height / 2);
@@ -41,6 +43,7 @@ export default class Thing {
         // Set up interactions
         this.interactions = interactions;
         this.interactions.forEach(interaction => interaction.setOwner(this));
+        this.flags = new Set(flags);
 
         // All good, put us on the map where we want to be.
         this.placeSelfAt(x, y, true);
@@ -91,7 +94,7 @@ export default class Thing {
         this.position.y = y;
         this.sprite.x = x * tileSize + this.displayOffset.dx;
         this.sprite.y = y * tileSize + this.displayOffset.dy;
-        this.sprite.zIndex = y;
+        this.sprite.zIndex = y + this.thingLayer / 10;
     }
 
     // Be interacted with.

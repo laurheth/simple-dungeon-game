@@ -6,6 +6,7 @@ import Thing from "./Thing"
 import Player from "./Player"
 import Entity from "./Entity"
 import Pushable from "./Pushable"
+import Scorable from "./Scorable"
 
 interface MapHandlerParams {
     base: Tilemap;
@@ -63,7 +64,8 @@ class MapHandler {
             y:0,
             mapHandler: this,
             entityContainer,
-            displayOffset: {dx:0, dy:-8}
+            displayOffset: {dx:0, dy:-8},
+            flags: [Pushable.flag]
         });
 
         const pushableBox = new Entity({
@@ -72,8 +74,17 @@ class MapHandler {
             y: 4,
             mapHandler: this,
             entityContainer,
-            interactions:[new Pushable()]
+            interactions:[new Pushable(), new Scorable()]
         });
+
+        const scoreSpot = new Thing({
+            spriteSource: "assets/scoreSpot.png",
+            x: 6,
+            y: 6,
+            mapHandler: this,
+            entityContainer,
+            flags: [Scorable.flag]
+        })
 
         // Splat onto the screen
         base.setMap(baseMap);

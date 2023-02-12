@@ -1,4 +1,4 @@
-import { Container, Sprite, Spritesheet } from "pixi.js"
+import { Container, ParticleContainer, Sprite, Spritesheet } from "pixi.js"
 
 interface TilemapParams {
     spriteSheet: Spritesheet;
@@ -21,7 +21,7 @@ class Tilemap {
     tileSize: number;
     constructor({spriteSheet, parent, tileSize}:TilemapParams) {
         this.spriteSheet = spriteSheet;
-        this.container = new Container();
+        this.container = new ParticleContainer();
         this.map = {};
         this.tileSize = tileSize;
         parent.addChild(this.container);

@@ -2,7 +2,12 @@ import Interaction from "./Interaction";
 import Thing from "./Thing";
 
 export default class Pushable extends Interaction {
+    static flag: string = "CanPush";
     interact(performer: Thing): boolean {
+        // Verify that the performer is able to push
+        if (!performer.flags.has(Pushable.flag)) {
+            return false;
+        }
         // Get the direction to push the owner
         const dx = this.owner.position.x - performer.position.x;
         const dy = this.owner.position.y - performer.position.y;
